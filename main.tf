@@ -72,7 +72,7 @@ resource "aws_api_gateway_domain_name" "default" {
 resource "aws_route53_record" "api_record" {
   name    = aws_api_gateway_domain_name.default.domain_name
   type    = "A"
-  zone_id = var.DOMAIN_NAME
+  zone_id = var.AWS_ROUTE53_ZONE_ID
 
   alias {
     evaluate_target_health = true
