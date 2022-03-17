@@ -5,7 +5,7 @@ output "REST_API_ROOT_ID" {
 }
 
 output "REST_API_ID" {
-  value       = aws_api_gateway_rest_api.regere_api_gateway.id
+  value       = aws_api_gateway_rest_api.default.id
   description = "REST API Gateway ID"
   sensitive   = true
 }
