@@ -24,4 +24,5 @@ variable "USAGE_PLANS" {
     })
   }))
   description = "Add usage plans"
+  default = [ ]
 }
