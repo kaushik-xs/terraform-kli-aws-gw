@@ -31,6 +31,30 @@ resource "aws_api_gateway_stage" "default" {
   ]
 }
 
+resource "aws_api_gateway_usage_plan" "default" {
+  count = length(var.USAGE_PLANS)
+  for_each = {
+    for plan in var.USAGE_PLANS : plan.name => {
+      name = plan.name
+      description = plan.description
+      api_stages {
+        api_id = aws_api_gateway_rest_api.default.id
+        stage  = aws_api_gateway_stage.default.stage_name
+      }
+      quota_settings {
+        limit  = plan.quota_settings.limit
+        offset = plan.quota_settings.offset
+        period = plan.quota_settings.period
+      }
+
+      throttle_settings {
+        burst_limit = plan.throttle_settings.burst_limit
+        rate_limit  = plan.throttle_settings.rate_limit
+      }
+    }
+  }
+}
+
 resource "aws_acm_certificate" "default" {
   domain_name       = var.DOMAIN_NAME
   validation_method = "DNS"
