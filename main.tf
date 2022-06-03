@@ -25,6 +25,13 @@ resource "aws_api_gateway_stage" "default" {
   deployment_id = aws_api_gateway_deployment.default.id
   rest_api_id   = aws_api_gateway_rest_api.default.id
   stage_name    = "prod"
+  lifecycle {
+    ignore_changes = [
+      # Ignore changes to tags, e.g. because a management agent
+      # updates these based on some ruleset managed elsewhere.
+      deployment_id
+    ]
+  }
   depends_on = [
     aws_api_gateway_method.default,
     aws_api_gateway_method_response.default
